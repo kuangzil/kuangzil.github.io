@@ -1,16 +1,93 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
     "section": "",
-    "text": "About this site"
+    "text": "My First Weeks in MDS\n\n\n\n\n\n\n\n\nSep 10, 2026\n\n\nKuangzi Li\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "website",
+    "title": "kuangzil",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "I am a Master of Data Science student at the University of British Columbia, specializing in Computational Linguistics. My interests include AI agents, natural language processing, and software engineering."
+  },
+  {
+    "objectID": "index.html#about-me",
+    "href": "index.html#about-me",
+    "title": "kuangzil",
+    "section": "",
+    "text": "I am a Master of Data Science student at the University of British Columbia, specializing in Computational Linguistics. My interests include AI agents, natural language processing, and software engineering."
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "kuangzil",
+    "section": "Experience",
+    "text": "Experience\n\nAI Agent Engineer Intern — Covestro\nI developed an AI agent system using LangGraph, AWS Bedrock, MCP, and RAG.\n\n\nAI/ML Software Engineer Intern — BMW\nI worked on AI-assisted automotive testing, CAN bus data processing, and agent-based workflow automation."
+  },
+  {
+    "objectID": "index.html#interests",
+    "href": "index.html#interests",
+    "title": "kuangzil",
+    "section": "Interests",
+    "text": "Interests\nOutside of technology, I enjoy cooking, exploring Vancouver, and discovering good Japanese and Chinese food.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "posts/first-weeks/index.html",
+    "href": "posts/first-weeks/index.html",
+    "title": "My First Weeks in MDS",
+    "section": "",
+    "text": "I was unable to attend the official orientation, so my introduction to the MDS program was a little different from that of many of my classmates. I gradually became familiar with the program by meeting my cohort, exploring the UBC campus, and learning how the courses are organized. It was exciting to meet classmates from many different academic and professional backgrounds."
+  },
+  {
+    "objectID": "posts/first-weeks/index.html#getting-started",
+    "href": "posts/first-weeks/index.html#getting-started",
+    "title": "My First Weeks in MDS",
+    "section": "",
+    "text": "I was unable to attend the official orientation, so my introduction to the MDS program was a little different from that of many of my classmates. I gradually became familiar with the program by meeting my cohort, exploring the UBC campus, and learning how the courses are organized. It was exciting to meet classmates from many different academic and professional backgrounds."
+  },
+  {
+    "objectID": "posts/first-weeks/index.html#the-first-week-of-classes",
+    "href": "posts/first-weeks/index.html#the-first-week-of-classes",
+    "title": "My First Weeks in MDS",
+    "section": "The First Week of Classes",
+    "text": "The First Week of Classes\nThe first week was fast-paced and more intensive than I expected. We began working with R, Python, statistics, command-line tools, and collaborative workflows. I was especially surprised by how quickly the courses moved from basic concepts to practical exercises. Although I already had experience in AI engineering, the program introduced me to a more systematic way of working with data and communicating analytical results."
+  },
+  {
+    "objectID": "posts/first-weeks/index.html#looking-ahead",
+    "href": "posts/first-weeks/index.html#looking-ahead",
+    "title": "My First Weeks in MDS",
+    "section": "Looking Ahead",
+    "text": "Looking Ahead\nI am currently adjusting to the workload and learning how to manage several short assignments at the same time. The pace can be challenging, but I am becoming more comfortable with it. Over the coming months, I hope to strengthen my foundations in statistics and machine learning while connecting them with my previous experience building AI agents. I also look forward to exploring Vancouver and getting to know my classmates better."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I studied English as an undergraduate and later completed a master’s degree in Linguistics at the University of Wisconsin–Madison. During my graduate studies, I became increasingly interested in natural language processing, machine learning, and software development.\nBefore coming to Vancouver, I worked as an AI Agent Engineer Intern at Covestro, where I developed agentic AI applications using LangGraph, AWS Bedrock, MCP, and retrieval-augmented generation. I also worked as an AI/ML Software Engineer Intern at BMW, focusing on AI-assisted automotive testing, CAN bus data processing, and workflow automation.\nI am now studying in the Master of Data Science program at the University of British Columbia. I came to Vancouver to strengthen my technical foundation and prepare for a career in AI and software engineering."
+  },
+  {
+    "objectID": "about.html#background",
+    "href": "about.html#background",
+    "title": "About",
+    "section": "",
+    "text": "I studied English as an undergraduate and later completed a master’s degree in Linguistics at the University of Wisconsin–Madison. During my graduate studies, I became increasingly interested in natural language processing, machine learning, and software development.\nBefore coming to Vancouver, I worked as an AI Agent Engineer Intern at Covestro, where I developed agentic AI applications using LangGraph, AWS Bedrock, MCP, and retrieval-augmented generation. I also worked as an AI/ML Software Engineer Intern at BMW, focusing on AI-assisted automotive testing, CAN bus data processing, and workflow automation.\nI am now studying in the Master of Data Science program at the University of British Columbia. I came to Vancouver to strengthen my technical foundation and prepare for a career in AI and software engineering."
+  },
+  {
+    "objectID": "about.html#why-data-science",
+    "href": "about.html#why-data-science",
+    "title": "About",
+    "section": "Why Data Science",
+    "text": "Why Data Science\nMy background in linguistics first introduced me to the challenge of turning human language into structured information that computers can process. As I explored NLP and large language models, I became more interested in building complete AI systems rather than studying language alone.\nI chose the MDSCL program to develop stronger skills in statistics, programming, machine learning, and AI. I am particularly interested in building reliable AI agents that can retrieve information, use external tools, analyze data, and complete multi-step tasks. In the future, I hope to apply data science and AI engineering to practical problems in industry."
+  },
+  {
+    "objectID": "about.html#outside-of-data-science",
+    "href": "about.html#outside-of-data-science",
+    "title": "About",
+    "section": "Outside of Data Science",
+    "text": "Outside of Data Science\nOutside of data science, I enjoy cooking Chinese and Japanese food. Some of my favorite dishes to make are gyudon, mapo tofu, Japanese curry, and tomato and egg stir-fry. I also enjoy exploring Vancouver, trying local restaurants, and discovering new neighborhoods.\nI recently moved to Vancouver, so I am still learning about the city and building a new life here. I especially enjoy its mild climate, diverse food, and proximity to both the ocean and the mountains."
   }
 ]

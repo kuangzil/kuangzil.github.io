@@ -1,0 +1,32 @@
+---
+title: "My First Weeks in MDS"
+author: "Kuangzi Li"
+date: 2026-09-10
+---
+
+## Getting Started
+
+I was unable to attend the official orientation, so my introduction to the MDS
+program was a little different from that of many of my classmates. I gradually
+became familiar with the program by meeting my cohort, exploring the UBC campus,
+and learning how the courses are organized. It was exciting to meet classmates
+from many different academic and professional backgrounds.
+
+## The First Week of Classes
+
+The first week was fast-paced and more intensive than I expected. We began
+working with R, Python, statistics, command-line tools, and collaborative
+workflows. I was especially surprised by how quickly the courses moved from
+basic concepts to practical exercises. Although I already had experience in AI
+engineering, the program introduced me to a more systematic way of working with
+data and communicating analytical results.
+
+## Looking Ahead
+
+I am currently adjusting to the workload and learning how to manage several
+short assignments at the same time. The pace can be challenging, but I am
+becoming more comfortable with it. Over the coming months, I hope to strengthen
+my foundations in statistics and machine learning while connecting them with
+my previous experience building AI agents. I also look forward to exploring
+Vancouver and getting to know my classmates better.
+

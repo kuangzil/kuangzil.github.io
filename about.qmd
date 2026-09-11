@@ -2,4 +2,43 @@
 title: "About"
 ---
 
-About this site
+## Background
+
+I studied English as an undergraduate and later completed a master's degree in
+Linguistics at the University of Wisconsin–Madison. During my graduate studies,
+I became increasingly interested in natural language processing, machine
+learning, and software development.
+
+Before coming to Vancouver, I worked as an AI Agent Engineer Intern at Covestro,
+where I developed agentic AI applications using LangGraph, AWS Bedrock, MCP,
+and retrieval-augmented generation. I also worked as an AI/ML Software Engineer
+Intern at BMW, focusing on AI-assisted automotive testing, CAN bus data
+processing, and workflow automation.
+
+I am now studying in the Master of Data Science program at the University of
+British Columbia. I came to Vancouver to strengthen my technical foundation
+and prepare for a career in AI and software engineering.
+
+## Why Data Science
+
+My background in linguistics first introduced me to the challenge of turning
+human language into structured information that computers can process.
+As I explored NLP and large language models, I became more interested in
+building complete AI systems rather than studying language alone.
+
+I chose the MDSCL program to develop stronger skills in statistics, programming,
+machine learning, and AI. I am particularly interested in building
+reliable AI agents that can retrieve information, use external tools, analyze
+data, and complete multi-step tasks. In the future, I hope to apply data science
+and AI engineering to practical problems in industry.
+
+## Outside of Data Science
+
+Outside of data science, I enjoy cooking Chinese and Japanese food. Some of my
+favorite dishes to make are gyudon, mapo tofu, Japanese curry, and tomato and
+egg stir-fry. I also enjoy exploring Vancouver, trying local restaurants, and
+discovering new neighborhoods.
+
+I recently moved to Vancouver, so I am still learning about the city and
+building a new life here. I especially enjoy its mild climate, diverse food,
+and proximity to both the ocean and the mountains.

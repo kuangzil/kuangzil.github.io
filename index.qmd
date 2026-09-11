@@ -1,7 +1,28 @@
 ---
-title: "website"
+title: "kuangzil"
 ---
 
-This is a Quarto website.
+## About Me
+
+I am a Master of Data Science student at the University of British Columbia,
+specializing in Computational Linguistics. My interests include AI agents,
+natural language processing, and software engineering.
+
+## Experience
+
+### AI Agent Engineer Intern — Covestro
+
+I developed an AI agent system using LangGraph, AWS Bedrock, MCP, and RAG.
+
+### AI/ML Software Engineer Intern — BMW
+
+I worked on AI-assisted automotive testing, CAN bus data processing, and
+agent-based workflow automation.
+
+## Interests
+
+Outside of technology, I enjoy cooking, exploring Vancouver, and discovering
+good Japanese and Chinese food.
 
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+![](images/profile.png){width=250px}
