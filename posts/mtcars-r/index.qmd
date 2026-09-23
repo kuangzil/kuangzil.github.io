@@ -1,0 +1,93 @@
+---
+title: "Fuel Economy and Car Design in R"
+author: "Kuangzi Li"
+date: 2026-09-22
+format:
+  html:
+    code-fold: false
+---
+
+## Question
+
+This post uses R to examine how vehicle weight and transmission type relate to fuel economy in the `mtcars` dataset.
+
+Data: [`mtcars`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html), bundled with R's `datasets` package. The data were extracted from the 1974 Motor Trend US magazine and are distributed as part of R.
+
+```{r}
+#| label: setup-r
+#| message: false
+#| warning: false
+library(ggplot2)
+```
+
+## Load and Prepare the Data
+
+The dataset has one row per car model and includes fuel economy, engine, weight, and transmission variables. I turned row names into a regular column and converted the transmission code into readable labels.
+
+```{r}
+#| label: load-mtcars
+cars <- mtcars
+cars$model <- rownames(mtcars)
+cars$transmission <- factor(cars$am, levels = c(0, 1), labels = c("Automatic", "Manual"))
+cars$cylinders <- factor(cars$cyl)
+
+head(cars[, c("model", "mpg", "wt", "hp", "cylinders", "transmission")])
+```
+
+The dataset is small, so a grouped summary is useful before fitting a model.
+
+```{r}
+#| label: transmission-summary
+aggregate(
+  mpg ~ transmission,
+  data = cars,
+  FUN = function(x) round(c(mean = mean(x), median = median(x), min = min(x), max = max(x)), 2)
+)
+```
+
+## Visualize Fuel Economy
+
+Heavier cars tend to have lower miles per gallon. Manual cars in this dataset often appear among the lighter, more fuel-efficient cars.
+
+```{r}
+#| label: fig-mtcars-weight-mpg
+#| fig-cap: "Fuel economy decreases as vehicle weight increases in the mtcars dataset."
+ggplot(cars, aes(x = wt, y = mpg, color = transmission, shape = cylinders)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Weight (1000 lbs)",
+    y = "Miles per gallon",
+    color = "Transmission",
+    shape = "Cylinders",
+    title = "Fuel economy by weight and transmission"
+  ) +
+  theme_minimal()
+```
+
+## Fit a Linear Model
+
+I fit a simple linear model to estimate fuel economy from weight and transmission type. This is not a causal model, but it helps quantify the pattern in the plot.
+
+```{r}
+#| label: fit-model-r
+mpg_model <- lm(mpg ~ wt + transmission, data = cars)
+summary(mpg_model)
+```
+
+The fitted values below compare a light and a heavy car under each transmission type.
+
+```{r}
+#| label: model-predictions-r
+new_cars <- expand.grid(
+  wt = c(2.2, 3.8),
+  transmission = levels(cars$transmission)
+)
+new_cars$predicted_mpg <- round(predict(mpg_model, newdata = new_cars), 1)
+
+new_cars
+```
+
+## What I Found
+
+In this dataset, vehicle weight has a strong negative relationship with fuel economy. Manual cars have higher average MPG, but transmission is also mixed with other design features: many manual cars are lighter. After accounting for weight in a simple model, the estimated transmission difference is smaller than the raw grouped average suggests.

@@ -24,5 +24,4 @@ agent-based workflow automation.
 Outside of technology, I enjoy cooking, exploring Vancouver, and discovering
 good Japanese and Chinese food.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 ![](images/profile.png){width=250px}

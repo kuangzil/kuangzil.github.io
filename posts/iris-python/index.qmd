@@ -1,0 +1,132 @@
+---
+title: "Classifying Iris Flowers with Python"
+author: "Kuangzi Li"
+date: 2026-09-23
+format:
+  html:
+    code-fold: false
+---
+
+## Question
+
+This post uses Python to explore whether sepal and petal measurements can distinguish the three iris species in the classic Iris dataset.
+
+Data: [Iris plants dataset](https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-plants-dataset), bundled with `scikit-learn`. The original data were introduced by Fisher (1936) and are distributed with scikit-learn under the BSD 3-Clause license.
+
+```{python}
+#| label: setup-python
+#| message: false
+#| warning: false
+import sys
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.model_selection import train_test_split
+
+print(sys.executable)
+```
+
+## Load and Inspect the Data
+
+The dataset contains four measurements for 150 flowers. I converted the bundled NumPy arrays into a pandas data frame so that the later summary tables are easier to read.
+
+```{python}
+#| label: load-iris
+iris = load_iris(as_frame=True)
+iris_df = iris.frame.rename(columns={"target": "species_id"})
+iris_df["species"] = iris_df["species_id"].map(dict(enumerate(iris.target_names)))
+
+iris_df.head()
+```
+
+The classes are balanced: each species has the same number of rows.
+
+```{python}
+#| label: species-counts
+species_counts = iris_df["species"].value_counts().rename_axis("species").reset_index(name="n")
+species_counts
+```
+
+## Compare Measurements
+
+Petal length and petal width are the clearest visual separation in this dataset. Setosa flowers are especially distinct, while versicolor and virginica overlap more.
+
+```{python}
+#| label: fig-iris-petals
+#| fig-cap: "Petal length and petal width separate the three iris species."
+fig, ax = plt.subplots(figsize=(7, 5))
+
+for species, group in iris_df.groupby("species"):
+    ax.scatter(
+        group["petal length (cm)"],
+        group["petal width (cm)"],
+        label=species,
+        alpha=0.8,
+    )
+
+ax.set_xlabel("Petal length (cm)")
+ax.set_ylabel("Petal width (cm)")
+ax.set_title("Iris petal measurements by species")
+ax.legend(title="Species")
+plt.show()
+```
+
+I also summarized the average measurements by species. Petal measurements grow steadily from setosa to versicolor to virginica.
+
+```{python}
+#| label: measurement-summary
+summary = (
+    iris_df.groupby("species")
+    .agg(
+        mean_sepal_length=("sepal length (cm)", "mean"),
+        mean_sepal_width=("sepal width (cm)", "mean"),
+        mean_petal_length=("petal length (cm)", "mean"),
+        mean_petal_width=("petal width (cm)", "mean"),
+    )
+    .round(2)
+)
+
+summary
+```
+
+## Fit a Simple Classifier
+
+To check whether the visual separation is useful for prediction, I trained a logistic regression model. The model uses all four measurements and is evaluated on a held-out test set.
+
+```{python}
+#| label: train-model
+X_train, X_test, y_train, y_test = train_test_split(
+    iris.data,
+    iris.target,
+    test_size=0.25,
+    random_state=521,
+    stratify=iris.target,
+)
+
+model = LogisticRegression(max_iter=200)
+model.fit(X_train, y_train)
+predicted = model.predict(X_test)
+
+accuracy = accuracy_score(y_test, predicted)
+print(f"Test accuracy: {accuracy:.3f}")
+```
+
+The confusion matrix shows which species were confused in the test set.
+
+```{python}
+#| label: confusion-matrix
+confusion = pd.DataFrame(
+    confusion_matrix(y_test, predicted),
+    index=[f"actual {name}" for name in iris.target_names],
+    columns=[f"predicted {name}" for name in iris.target_names],
+)
+
+confusion
+```
+
+## What I Found
+
+The Iris dataset is small but very structured. Setosa is easy to separate because its petals are much shorter and narrower. Versicolor and virginica are closer together, but the logistic regression model still classifies the held-out examples accurately. This supports the visual pattern: petal dimensions carry most of the species signal.

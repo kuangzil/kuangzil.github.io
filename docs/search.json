@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "My First Weeks in MDS\n\n\n\n\n\n\n\n\nSep 10, 2026\n\n\nKuangzi Li\n\n\n\n\n\nNo matching items"
+    "text": "Classifying Iris Flowers with Python\n\n\n\n\n\n\n\n\nSep 23, 2026\n\n\nKuangzi Li\n\n\n\n\n\n\n\n\n\n\n\n\nFuel Economy and Car Design in R\n\n\n\n\n\n\n\n\nSep 22, 2026\n\n\nKuangzi Li\n\n\n\n\n\n\n\n\n\n\n\n\nMy First Weeks in MDS\n\n\n\n\n\n\n\n\nSep 10, 2026\n\n\nKuangzi Li\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -32,7 +32,49 @@
     "href": "index.html#interests",
     "title": "kuangzil",
     "section": "Interests",
-    "text": "Interests\nOutside of technology, I enjoy cooking, exploring Vancouver, and discovering good Japanese and Chinese food.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Interests\nOutside of technology, I enjoy cooking, exploring Vancouver, and discovering good Japanese and Chinese food."
+  },
+  {
+    "objectID": "posts/mtcars-r/index.html",
+    "href": "posts/mtcars-r/index.html",
+    "title": "Fuel Economy and Car Design in R",
+    "section": "",
+    "text": "This post uses R to examine how vehicle weight and transmission type relate to fuel economy in the mtcars dataset.\nData: mtcars, bundled with R’s datasets package. The data were extracted from the 1974 Motor Trend US magazine and are distributed as part of R.\n\nlibrary(ggplot2)"
+  },
+  {
+    "objectID": "posts/mtcars-r/index.html#question",
+    "href": "posts/mtcars-r/index.html#question",
+    "title": "Fuel Economy and Car Design in R",
+    "section": "",
+    "text": "This post uses R to examine how vehicle weight and transmission type relate to fuel economy in the mtcars dataset.\nData: mtcars, bundled with R’s datasets package. The data were extracted from the 1974 Motor Trend US magazine and are distributed as part of R.\n\nlibrary(ggplot2)"
+  },
+  {
+    "objectID": "posts/mtcars-r/index.html#load-and-prepare-the-data",
+    "href": "posts/mtcars-r/index.html#load-and-prepare-the-data",
+    "title": "Fuel Economy and Car Design in R",
+    "section": "Load and Prepare the Data",
+    "text": "Load and Prepare the Data\nThe dataset has one row per car model and includes fuel economy, engine, weight, and transmission variables. I turned row names into a regular column and converted the transmission code into readable labels.\n\ncars &lt;- mtcars\ncars$model &lt;- rownames(mtcars)\ncars$transmission &lt;- factor(cars$am, levels = c(0, 1), labels = c(\"Automatic\", \"Manual\"))\ncars$cylinders &lt;- factor(cars$cyl)\n\nhead(cars[, c(\"model\", \"mpg\", \"wt\", \"hp\", \"cylinders\", \"transmission\")])\n\n                              model  mpg    wt  hp cylinders transmission\nMazda RX4                 Mazda RX4 21.0 2.620 110         6       Manual\nMazda RX4 Wag         Mazda RX4 Wag 21.0 2.875 110         6       Manual\nDatsun 710               Datsun 710 22.8 2.320  93         4       Manual\nHornet 4 Drive       Hornet 4 Drive 21.4 3.215 110         6    Automatic\nHornet Sportabout Hornet Sportabout 18.7 3.440 175         8    Automatic\nValiant                     Valiant 18.1 3.460 105         6    Automatic\n\n\nThe dataset is small, so a grouped summary is useful before fitting a model.\n\naggregate(\n  mpg ~ transmission,\n  data = cars,\n  FUN = function(x) round(c(mean = mean(x), median = median(x), min = min(x), max = max(x)), 2)\n)\n\n  transmission mpg.mean mpg.median mpg.min mpg.max\n1    Automatic    17.15      17.30   10.40   24.40\n2       Manual    24.39      22.80   15.00   33.90"
+  },
+  {
+    "objectID": "posts/mtcars-r/index.html#visualize-fuel-economy",
+    "href": "posts/mtcars-r/index.html#visualize-fuel-economy",
+    "title": "Fuel Economy and Car Design in R",
+    "section": "Visualize Fuel Economy",
+    "text": "Visualize Fuel Economy\nHeavier cars tend to have lower miles per gallon. Manual cars in this dataset often appear among the lighter, more fuel-efficient cars.\n\nggplot(cars, aes(x = wt, y = mpg, color = transmission, shape = cylinders)) +\n  geom_point(size = 3) +\n  geom_smooth(method = \"lm\", se = FALSE) +\n  labs(\n    x = \"Weight (1000 lbs)\",\n    y = \"Miles per gallon\",\n    color = \"Transmission\",\n    shape = \"Cylinders\",\n    title = \"Fuel economy by weight and transmission\"\n  ) +\n  theme_minimal()\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\nFigure 1: Fuel economy decreases as vehicle weight increases in the mtcars dataset."
+  },
+  {
+    "objectID": "posts/mtcars-r/index.html#fit-a-linear-model",
+    "href": "posts/mtcars-r/index.html#fit-a-linear-model",
+    "title": "Fuel Economy and Car Design in R",
+    "section": "Fit a Linear Model",
+    "text": "Fit a Linear Model\nI fit a simple linear model to estimate fuel economy from weight and transmission type. This is not a causal model, but it helps quantify the pattern in the plot.\n\nmpg_model &lt;- lm(mpg ~ wt + transmission, data = cars)\nsummary(mpg_model)\n\n\nCall:\nlm(formula = mpg ~ wt + transmission, data = cars)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-4.5295 -2.3619 -0.1317  1.4025  6.8782 \n\nCoefficients:\n                   Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)        37.32155    3.05464  12.218 5.84e-13 ***\nwt                 -5.35281    0.78824  -6.791 1.87e-07 ***\ntransmissionManual -0.02362    1.54565  -0.015    0.988    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.098 on 29 degrees of freedom\nMultiple R-squared:  0.7528,    Adjusted R-squared:  0.7358 \nF-statistic: 44.17 on 2 and 29 DF,  p-value: 1.579e-09\n\n\nThe fitted values below compare a light and a heavy car under each transmission type.\n\nnew_cars &lt;- expand.grid(\n  wt = c(2.2, 3.8),\n  transmission = levels(cars$transmission)\n)\nnew_cars$predicted_mpg &lt;- round(predict(mpg_model, newdata = new_cars), 1)\n\nnew_cars\n\n   wt transmission predicted_mpg\n1 2.2    Automatic          25.5\n2 3.8    Automatic          17.0\n3 2.2       Manual          25.5\n4 3.8       Manual          17.0"
+  },
+  {
+    "objectID": "posts/mtcars-r/index.html#what-i-found",
+    "href": "posts/mtcars-r/index.html#what-i-found",
+    "title": "Fuel Economy and Car Design in R",
+    "section": "What I Found",
+    "text": "What I Found\nIn this dataset, vehicle weight has a strong negative relationship with fuel economy. Manual cars have higher average MPG, but transmission is also mixed with other design features: many manual cars are lighter. After accounting for weight in a simple model, the estimated transmission difference is smaller than the raw grouped average suggests."
   },
   {
     "objectID": "posts/first-weeks/index.html",
@@ -61,6 +103,48 @@
     "title": "My First Weeks in MDS",
     "section": "Looking Ahead",
     "text": "Looking Ahead\nI am currently adjusting to the workload and learning how to manage several short assignments at the same time. The pace can be challenging, but I am becoming more comfortable with it. Over the coming months, I hope to strengthen my foundations in statistics and machine learning while connecting them with my previous experience building AI agents. I also look forward to exploring Vancouver and getting to know my classmates better.\n\n\n\nMy first week on the UBC campus"
+  },
+  {
+    "objectID": "posts/iris-python/index.html",
+    "href": "posts/iris-python/index.html",
+    "title": "Classifying Iris Flowers with Python",
+    "section": "",
+    "text": "This post uses Python to explore whether sepal and petal measurements can distinguish the three iris species in the classic Iris dataset.\nData: Iris plants dataset, bundled with scikit-learn. The original data were introduced by Fisher (1936) and are distributed with scikit-learn under the BSD 3-Clause license.\n\nimport sys\n\nimport matplotlib.pyplot as plt\nimport pandas as pd\nfrom sklearn.datasets import load_iris\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score, confusion_matrix\nfrom sklearn.model_selection import train_test_split\n\nprint(sys.executable)\n\n/Users/dylan/Documents/kuangzil.github.io/.venv/bin/python3"
+  },
+  {
+    "objectID": "posts/iris-python/index.html#question",
+    "href": "posts/iris-python/index.html#question",
+    "title": "Classifying Iris Flowers with Python",
+    "section": "",
+    "text": "This post uses Python to explore whether sepal and petal measurements can distinguish the three iris species in the classic Iris dataset.\nData: Iris plants dataset, bundled with scikit-learn. The original data were introduced by Fisher (1936) and are distributed with scikit-learn under the BSD 3-Clause license.\n\nimport sys\n\nimport matplotlib.pyplot as plt\nimport pandas as pd\nfrom sklearn.datasets import load_iris\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score, confusion_matrix\nfrom sklearn.model_selection import train_test_split\n\nprint(sys.executable)\n\n/Users/dylan/Documents/kuangzil.github.io/.venv/bin/python3"
+  },
+  {
+    "objectID": "posts/iris-python/index.html#load-and-inspect-the-data",
+    "href": "posts/iris-python/index.html#load-and-inspect-the-data",
+    "title": "Classifying Iris Flowers with Python",
+    "section": "Load and Inspect the Data",
+    "text": "Load and Inspect the Data\nThe dataset contains four measurements for 150 flowers. I converted the bundled NumPy arrays into a pandas data frame so that the later summary tables are easier to read.\n\niris = load_iris(as_frame=True)\niris_df = iris.frame.rename(columns={\"target\": \"species_id\"})\niris_df[\"species\"] = iris_df[\"species_id\"].map(dict(enumerate(iris.target_names)))\n\niris_df.head()\n\n\n\n\n\n\n\n\nsepal length (cm)\nsepal width (cm)\npetal length (cm)\npetal width (cm)\nspecies_id\nspecies\n\n\n\n\n0\n5.1\n3.5\n1.4\n0.2\n0\nsetosa\n\n\n1\n4.9\n3.0\n1.4\n0.2\n0\nsetosa\n\n\n2\n4.7\n3.2\n1.3\n0.2\n0\nsetosa\n\n\n3\n4.6\n3.1\n1.5\n0.2\n0\nsetosa\n\n\n4\n5.0\n3.6\n1.4\n0.2\n0\nsetosa\n\n\n\n\n\n\n\nThe classes are balanced: each species has the same number of rows.\n\nspecies_counts = iris_df[\"species\"].value_counts().rename_axis(\"species\").reset_index(name=\"n\")\nspecies_counts\n\n\n\n\n\n\n\n\nspecies\nn\n\n\n\n\n0\nsetosa\n50\n\n\n1\nversicolor\n50\n\n\n2\nvirginica\n50"
+  },
+  {
+    "objectID": "posts/iris-python/index.html#compare-measurements",
+    "href": "posts/iris-python/index.html#compare-measurements",
+    "title": "Classifying Iris Flowers with Python",
+    "section": "Compare Measurements",
+    "text": "Compare Measurements\nPetal length and petal width are the clearest visual separation in this dataset. Setosa flowers are especially distinct, while versicolor and virginica overlap more.\n\nfig, ax = plt.subplots(figsize=(7, 5))\n\nfor species, group in iris_df.groupby(\"species\"):\n    ax.scatter(\n        group[\"petal length (cm)\"],\n        group[\"petal width (cm)\"],\n        label=species,\n        alpha=0.8,\n    )\n\nax.set_xlabel(\"Petal length (cm)\")\nax.set_ylabel(\"Petal width (cm)\")\nax.set_title(\"Iris petal measurements by species\")\nax.legend(title=\"Species\")\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Petal length and petal width separate the three iris species.\n\n\n\n\n\nI also summarized the average measurements by species. Petal measurements grow steadily from setosa to versicolor to virginica.\n\nsummary = (\n    iris_df.groupby(\"species\")\n    .agg(\n        mean_sepal_length=(\"sepal length (cm)\", \"mean\"),\n        mean_sepal_width=(\"sepal width (cm)\", \"mean\"),\n        mean_petal_length=(\"petal length (cm)\", \"mean\"),\n        mean_petal_width=(\"petal width (cm)\", \"mean\"),\n    )\n    .round(2)\n)\n\nsummary\n\n\n\n\n\n\n\n\nmean_sepal_length\nmean_sepal_width\nmean_petal_length\nmean_petal_width\n\n\nspecies\n\n\n\n\n\n\n\n\nsetosa\n5.01\n3.43\n1.46\n0.25\n\n\nversicolor\n5.94\n2.77\n4.26\n1.33\n\n\nvirginica\n6.59\n2.97\n5.55\n2.03"
+  },
+  {
+    "objectID": "posts/iris-python/index.html#fit-a-simple-classifier",
+    "href": "posts/iris-python/index.html#fit-a-simple-classifier",
+    "title": "Classifying Iris Flowers with Python",
+    "section": "Fit a Simple Classifier",
+    "text": "Fit a Simple Classifier\nTo check whether the visual separation is useful for prediction, I trained a logistic regression model. The model uses all four measurements and is evaluated on a held-out test set.\n\nX_train, X_test, y_train, y_test = train_test_split(\n    iris.data,\n    iris.target,\n    test_size=0.25,\n    random_state=521,\n    stratify=iris.target,\n)\n\nmodel = LogisticRegression(max_iter=200)\nmodel.fit(X_train, y_train)\npredicted = model.predict(X_test)\n\naccuracy = accuracy_score(y_test, predicted)\nprint(f\"Test accuracy: {accuracy:.3f}\")\n\nTest accuracy: 0.921\n\n\nThe confusion matrix shows which species were confused in the test set.\n\nconfusion = pd.DataFrame(\n    confusion_matrix(y_test, predicted),\n    index=[f\"actual {name}\" for name in iris.target_names],\n    columns=[f\"predicted {name}\" for name in iris.target_names],\n)\n\nconfusion\n\n\n\n\n\n\n\n\npredicted setosa\npredicted versicolor\npredicted virginica\n\n\n\n\nactual setosa\n12\n0\n0\n\n\nactual versicolor\n0\n11\n2\n\n\nactual virginica\n0\n1\n12"
+  },
+  {
+    "objectID": "posts/iris-python/index.html#what-i-found",
+    "href": "posts/iris-python/index.html#what-i-found",
+    "title": "Classifying Iris Flowers with Python",
+    "section": "What I Found",
+    "text": "What I Found\nThe Iris dataset is small but very structured. Setosa is easy to separate because its petals are much shorter and narrower. Versicolor and virginica are closer together, but the logistic regression model still classifies the held-out examples accurately. This supports the visual pattern: petal dimensions carry most of the species signal."
   },
   {
     "objectID": "about.html",

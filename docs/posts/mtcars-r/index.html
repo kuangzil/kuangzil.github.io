@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Kuangzi Li">
+<meta name="dcterms.date" content="2026-09-22">
 
-<title>Blog – kuangzil</title>
+<title>Fuel Economy and Car Design in R – kuangzil</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,28 +28,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-445b8638c3d06994fee0907d791121c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-445b8638c3d06994fee0907d791121c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -75,67 +110,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -145,7 +122,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">kuangzil</span>
     </a>
   </div>
@@ -156,15 +133,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page"> 
+    <a class="nav-link" href="../../blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
@@ -178,22 +155,44 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question">Question</a></li>
+  <li><a href="#load-and-prepare-the-data" id="toc-load-and-prepare-the-data" class="nav-link" data-scroll-target="#load-and-prepare-the-data">Load and Prepare the Data</a></li>
+  <li><a href="#visualize-fuel-economy" id="toc-visualize-fuel-economy" class="nav-link" data-scroll-target="#visualize-fuel-economy">Visualize Fuel Economy</a></li>
+  <li><a href="#fit-a-linear-model" id="toc-fit-a-linear-model" class="nav-link" data-scroll-target="#fit-a-linear-model">Fit a Linear Model</a></li>
+  <li><a href="#what-i-found" id="toc-what-i-found" class="nav-link" data-scroll-target="#what-i-found">What I Found</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
+<h1 class="title">Fuel Economy and Car Design in R</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kuangzi Li </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 22, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -203,90 +202,134 @@ window.Quarto = {
 </header>
 
 
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>This post uses R to examine how vehicle weight and transmission type relate to fuel economy in the <code>mtcars</code> dataset.</p>
+<p>Data: <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html"><code>mtcars</code></a>, bundled with R’s <code>datasets</code> package. The data were extracted from the 1974 Motor Trend US magazine and are distributed as part of R.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="load-and-prepare-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-and-prepare-the-data">Load and Prepare the Data</h2>
+<p>The dataset has one row per car model and includes fuel economy, engine, weight, and transmission variables. I turned row names into a regular column and converted the transmission code into readable labels.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> mtcars</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cars<span class="sc">$</span>model <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mtcars)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>cars<span class="sc">$</span>transmission <span class="ot">&lt;-</span> <span class="fu">factor</span>(cars<span class="sc">$</span>am, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Automatic"</span>, <span class="st">"Manual"</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cars<span class="sc">$</span>cylinders <span class="ot">&lt;-</span> <span class="fu">factor</span>(cars<span class="sc">$</span>cyl)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cars[, <span class="fu">c</span>(<span class="st">"model"</span>, <span class="st">"mpg"</span>, <span class="st">"wt"</span>, <span class="st">"hp"</span>, <span class="st">"cylinders"</span>, <span class="st">"transmission"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                              model  mpg    wt  hp cylinders transmission
+Mazda RX4                 Mazda RX4 21.0 2.620 110         6       Manual
+Mazda RX4 Wag         Mazda RX4 Wag 21.0 2.875 110         6       Manual
+Datsun 710               Datsun 710 22.8 2.320  93         4       Manual
+Hornet 4 Drive       Hornet 4 Drive 21.4 3.215 110         6    Automatic
+Hornet Sportabout Hornet Sportabout 18.7 3.440 175         8    Automatic
+Valiant                     Valiant 18.1 3.460 105         6    Automatic</code></pre>
+</div>
+</div>
+<p>The dataset is small, so a grouped summary is useful before fitting a model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">~</span> transmission,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> cars,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">round</span>(<span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x), <span class="at">median =</span> <span class="fu">median</span>(x), <span class="at">min =</span> <span class="fu">min</span>(x), <span class="at">max =</span> <span class="fu">max</span>(x)), <span class="dv">2</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  transmission mpg.mean mpg.median mpg.min mpg.max
+1    Automatic    17.15      17.30   10.40   24.40
+2       Manual    24.39      22.80   15.00   33.90</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-fuel-economy" class="level2">
+<h2 class="anchored" data-anchor-id="visualize-fuel-economy">Visualize Fuel Economy</h2>
+<p>Heavier cars tend to have lower miles per gallon. Manual cars in this dataset often appear among the lighter, more fuel-efficient cars.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg, <span class="at">color =</span> transmission, <span class="at">shape =</span> cylinders)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Weight (1000 lbs)"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Miles per gallon"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Transmission"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="st">"Cylinders"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fuel economy by weight and transmission"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-mtcars-weight-mpg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mtcars-weight-mpg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-mtcars-weight-mpg-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mtcars-weight-mpg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Fuel economy decreases as vehicle weight increases in the mtcars dataset.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fit-a-linear-model" class="level2">
+<h2 class="anchored" data-anchor-id="fit-a-linear-model">Fit a Linear Model</h2>
+<p>I fit a simple linear model to estimate fuel economy from weight and transmission type. This is not a causal model, but it helps quantify the pattern in the plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mpg_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> transmission, <span class="at">data =</span> cars)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mpg_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ wt + transmission, data = cars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5295 -2.3619 -0.1317  1.4025  6.8782 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        37.32155    3.05464  12.218 5.84e-13 ***
+wt                 -5.35281    0.78824  -6.791 1.87e-07 ***
+transmissionManual -0.02362    1.54565  -0.015    0.988    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.098 on 29 degrees of freedom
+Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7358 
+F-statistic: 44.17 on 2 and 29 DF,  p-value: 1.579e-09</code></pre>
+</div>
+</div>
+<p>The fitted values below compare a light and a heavy car under each transmission type.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>new_cars <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">wt =</span> <span class="fu">c</span>(<span class="fl">2.2</span>, <span class="fl">3.8</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">transmission =</span> <span class="fu">levels</span>(cars<span class="sc">$</span>transmission)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>new_cars<span class="sc">$</span>predicted_mpg <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">predict</span>(mpg_model, <span class="at">newdata =</span> new_cars), <span class="dv">1</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>new_cars</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   wt transmission predicted_mpg
+1 2.2    Automatic          25.5
+2 3.8    Automatic          17.0
+3 2.2       Manual          25.5
+4 3.8       Manual          17.0</code></pre>
+</div>
+</div>
+</section>
+<section id="what-i-found" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-found">What I Found</h2>
+<p>In this dataset, vehicle weight has a strong negative relationship with fuel economy. Manual cars have higher average MPG, but transmission is also mixed with other design features: many manual cars are lighter. After accounting for weight in a simple model, the estimated transmission difference is smaller than the raw grouped average suggests.</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1790146800000" data-listing-file-modified-sort="1790186569540" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="469">
-<div class="thumbnail"><a href="./posts/iris-python/index.html" class="no-external">
-
-<p class="card-img-top"><img loading='lazy' src="posts/iris-python/index_files/figure-html/fig-iris-petals-output-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/iris-python/index.html" class="no-external">Classifying Iris Flowers with Python</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/iris-python/index.html" class="no-external">
-This post uses Python to explore whether sepal and petal measurements can distinguish the three iris species in the classic Iris dataset.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/iris-python/index.html" class="no-external">
-<div class="listing-date">
-Sep 23, 2026
-</div>
-<div class="listing-author">
-Kuangzi Li
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1790060400000" data-listing-file-modified-sort="1790186569541" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="393">
-<div class="thumbnail"><a href="./posts/mtcars-r/index.html" class="no-external">
-
-<p class="card-img-top"><img loading='lazy' src="posts/mtcars-r/index_files/figure-html/fig-mtcars-weight-mpg-1.png"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/mtcars-r/index.html" class="no-external">Fuel Economy and Car Design in R</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/mtcars-r/index.html" class="no-external">
-This post uses R to examine how vehicle weight and transmission type relate to fuel economy in the <code>mtcars</code> dataset.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/mtcars-r/index.html" class="no-external">
-<div class="listing-date">
-Sep 22, 2026
-</div>
-<div class="listing-author">
-Kuangzi Li
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1789023600000" data-listing-file-modified-sort="1789085601836" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="193">
-<div class="thumbnail"><a href="./posts/first-weeks/index.html" class="no-external">
-
-<p class="card-img-top"><img loading='lazy' src="posts/first-weeks/images-1.jpg"  class="thumbnail-image card-img"/></p>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/first-weeks/index.html" class="no-external">My First Weeks in MDS</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/first-weeks/index.html" class="no-external">
-I was unable to attend the official orientation, so my introduction to the MDS program was a little different from that of many of my classmates. I gradually became familiar…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/first-weeks/index.html" class="no-external">
-<div class="listing-date">
-Sep 10, 2026
-</div>
-<div class="listing-author">
-Kuangzi Li
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
